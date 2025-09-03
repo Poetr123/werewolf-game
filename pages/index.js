@@ -1,4 +1,3 @@
-// pages/index.js
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -7,53 +6,66 @@ export default function Home() {
   const [roomId, setRoomId] = useState("");
   const router = useRouter();
 
-  async function handleCreate() {
-    if (!username || username.length < 3 || username.length > 10) return alert("Username 3-10 chars");
+  const createRoom = async () => {
+    if (!username) return alert("Isi username dulu (3-10 huruf)");
+
+    const id = Math.random().toString(36).substring(2, 8);
+    const hostId = id + "-host";
+
     const res = await fetch("/api/create-room", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username })
+      body: JSON.stringify({ roomId: id, hostId, username }),
     });
+
     const data = await res.json();
     if (data.error) return alert(data.error);
-    localStorage.setItem("playerId", data.playerId);
-    localStorage.setItem("username", username);
-    router.push(`/room/${data.roomId}`);
-  }
 
-  async function handleJoin() {
-    if (!username || username.length < 3 || username.length > 10) return alert("Username 3-10 chars");
-    if (!roomId) return alert("Masukkan Room ID");
+    router.push(`/room/${id}?user=${username}`);
+  };
+
+  const joinRoom = async () => {
+    if (!username) return alert("Isi username dulu (3-10 huruf)");
+    if (!roomId) return alert("Isi Room ID");
+
+    const playerId = Math.random().toString(36).substring(2, 8);
+
     const res = await fetch("/api/join-room", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ roomId, username })
+      body: JSON.stringify({ roomId, playerId, username }),
     });
+
     const data = await res.json();
     if (data.error) return alert(data.error);
-    localStorage.setItem("playerId", data.playerId);
-    localStorage.setItem("username", username);
-    router.push(`/room/${roomId}`);
-  }
+
+    router.push(`/room/${roomId}?user=${username}`);
+  };
 
   return (
-    <div style={{ padding: 30 }}>
-      <h1>Werewolf Online (Demo)</h1>
-      <div style={{ marginTop: 12 }}>
-        <input placeholder="Username (3-10)" value={username} onChange={(e) => setUsername(e.target.value)} />
-      </div>
-      <div style={{ marginTop: 10 }}>
-        <button onClick={handleCreate}>Create Room</button>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <h1 className="text-3xl font-bold">Werewolf Online</h1>
 
-      <hr style={{ margin: "20px 0" }} />
+      <input
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username (3-10)"
+        className="border p-2 rounded"
+      />
 
-      <div>
-        <input placeholder="Room ID" value={roomId} onChange={(e) => setRoomId(e.target.value)} />
-      </div>
-      <div style={{ marginTop: 10 }}>
-        <button onClick={handleJoin}>Join Room</button>
-      </div>
+      <button onClick={createRoom} className="bg-blue-500 text-white px-4 py-2 rounded">
+        Create Room
+      </button>
+
+      <input
+        value={roomId}
+        onChange={(e) => setRoomId(e.target.value)}
+        placeholder="Room ID"
+        className="border p-2 rounded"
+      />
+      <button onClick={joinRoom} className="bg-green-500 text-white px-4 py-2 rounded">
+        Join Room
+      </button>
     </div>
   );
 }
