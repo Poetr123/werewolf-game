@@ -8,6 +8,18 @@ export default function RoomPage() {
 
   const [room, setRoom] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [playerId, setPlayerId] = useState(null);
+
+  // Simpan playerId di localStorage supaya konsisten
+  useEffect(() => {
+    if (!username) return;
+    let pid = localStorage.getItem("playerId");
+    if (!pid) {
+      pid = Math.random().toString(36).substring(2, 8);
+      localStorage.setItem("playerId", pid);
+    }
+    setPlayerId(pid);
+  }, [username]);
 
   // Ambil data room setiap 2 detik (polling)
   useEffect(() => {
@@ -24,6 +36,27 @@ export default function RoomPage() {
     const interval = setInterval(fetchRoom, 2000);
     return () => clearInterval(interval);
   }, [id]);
+
+  // Auto-disconnect saat tab ditutup
+  useEffect(() => {
+    if (!id || !playerId) return;
+
+    const leave = async () => {
+      await fetch("/api/leave-room", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ roomId: id, playerId }),
+      });
+    };
+
+    // Jalankan saat tab ditutup / reload
+    window.addEventListener("beforeunload", leave);
+
+    return () => {
+      leave();
+      window.removeEventListener("beforeunload", leave);
+    };
+  }, [id, playerId]);
 
   if (loading) return <p className="text-center mt-10">Loading room...</p>;
   if (!room) return <p className="text-center mt-10">Room not found</p>;
