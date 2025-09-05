@@ -375,6 +375,15 @@
 
         // Fungsi untuk membuat room
         async function createRoom() {
+            if (!currentUser) {
+                showStatus("Silakan login dulu dengan mengisi username", "error");
+            return;
+        }
+
+    try {
+        const roomCode = generateRoomCode();
+        // ...
+
             try {
                 const roomCode = generateRoomCode();
                 
