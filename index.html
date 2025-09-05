@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Werewolf Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+    <script type="module" src="supabase.js"></script>
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Halaman Login -->
+        <div id="login-page" class="page active">
+            <div class="container">
+                <h1>Werewolf Game</h1>
+                <div class="login-form">
+                    <input type="text" id="username-input" placeholder="Username (3-10 karakter)" maxlength="10">
+                    <button id="login-btn">Masuk</button>
+                    <p id="login-error" class="error-message"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Halaman Lobi -->
+        <div id="lobby-page" class="page">
+            <div class="container">
+                <h2>Lobi Game</h2>
+                <div class="lobby-actions">
+                    <button id="create-room-btn">Buat Room</button>
+                    <div class="join-room">
+                        <input type="text" id="room-code-input" placeholder="Kode Room">
+                        <button id="join-room-btn">Join Room</button>
+                    </div>
+                </div>
+                <div id="room-info" class="hidden">
+                    <h3>Room: <span id="room-code"></span></h3>
+                    <p>Pemain: <span id="player-count">0</span>/<span id="max-players">10</span></p>
+                    <button id="start-game-btn" disabled>Mulai Game</button>
+                    <div id="players-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Halaman Game -->
+        <div id="game-page" class="page">
+            <div class="container">
+                <div class="game-header">
+                    <h3>Room: <span id="game-room-code"></span></h3>
+                    <p id="game-phase">Malam</p>
+                    <p id="timer">00:00</p>
+                </div>
+
+                <div class="game-content">
+                    <div id="player-list-game"></div>
+                    
+                    <div id="action-section" class="hidden">
+                        <h4>Aksi Malam</h4>
+                        <div id="action-buttons"></div>
+                    </div>
+
+                    <div id="discussion-section" class="hidden">
+                        <div id="chat-messages"></div>
+                        <div class="chat-input">
+                            <input type="text" id="chat-input" placeholder="Ketik pesan...">
+                            <button id="send-chat-btn">Kirim</button>
+                        </div>
+                    </div>
+
+                    <div id="voting-section" class="hidden">
+                        <h4>Pemungutan Suara</h4>
+                        <div id="voting-options"></div>
+                    </div>
+
+                    <div id="game-result" class="hidden">
+                        <h3 id="result-title"></h3>
+                        <p id="result-description"></p>
+                        <button id="back-to-lobby">Kembali ke Lobi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
