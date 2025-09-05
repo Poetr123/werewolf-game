@@ -405,14 +405,12 @@
         }
 
         // Fungsi untuk bergabung dengan room
-        async function joinRoom() {
-            const roomCode = roomCodeInput.value.trim();
-            
+        async function joinRoom(code = null) {
+            const roomCode = code ? code.trim() : roomCodeInput.value.trim();
             if (!roomCode) {
-                showStatus('Masukkan kode room', 'error');
-                return;
-            }
-            
+            showStatus('Masukkan kode room', 'error');
+              return;
+        }    
             try {
                 // Cek apakah room ada
                 const { data: roomData, error: roomError } = await supabase
