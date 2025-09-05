@@ -1,0 +1,258 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #1a1a2e;
+    color: #e6e6e6;
+    height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page {
+    display: none;
+    height: 100vh;
+    overflow: auto;
+}
+
+.page.active {
+    display: block;
+}
+
+h1, h2, h3, h4 {
+    color: #ff7b25;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Halaman Login */
+#login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    background-color: #16213e;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+#username-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0f3460;
+    color: white;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 20px;
+    background-color: #ff7b25;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #e56b1a;
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #ff4d4d;
+    margin-top: 10px;
+}
+
+/* Halaman Lobi */
+.lobby-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.join-room {
+    display: flex;
+    gap: 10px;
+}
+
+#room-code-input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0f3460;
+    color: white;
+}
+
+#room-info {
+    background-color: #16213e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#players-list {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.player-item {
+    padding: 10px;
+    background-color: #0f3460;
+    border-radius: 5px;
+}
+
+/* Halaman Game */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #344e7a;
+}
+
+.game-content {
+    background-color: #16213e;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#player-list-game {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.player-card {
+    background-color: #0f3460;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+}
+
+.player-card.dead {
+    opacity: 0.6;
+    background-color: #4a0e0e;
+}
+
+.player-card.self {
+    border: 2px solid #ff7b25;
+}
+
+.role-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff7b25;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#action-buttons, #voting-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.action-btn, .vote-btn {
+    padding: 8px 15px;
+    background-color: #344e7a;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.action-btn:hover, .vote-btn:hover {
+    background-color: #4a6894;
+}
+
+#chat-messages {
+    height: 200px;
+    overflow-y: auto;
+    background-color: #0f3460;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.chat-message {
+    margin-bottom: 8px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.chat-message.system {
+    background-color: #2d4263;
+    font-style: italic;
+}
+
+.chat-message.player {
+    background-color: #344e7a;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0f3460;
+    color: white;
+}
+
+#game-result {
+    text-align: center;
+    padding: 20px;
+}
+
+#result-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#result-description {
+    margin-bottom: 20px;
+}
